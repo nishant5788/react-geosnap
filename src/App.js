@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useGeolocation } from "./useGeolocation";
-
-
+import { useLocalStorageState } from "./useLocalStorageState";
 
 export default function App() {
   const {
@@ -10,7 +9,7 @@ export default function App() {
     getPosition,
   } = useGeolocation();
 
-  const [clicks, setClicks] = useState(0);
+  const [clicks, setClicks] = useLocalStorageState(0, "Requests");
 
   function handleClick() {
     setClicks((count) => count + 1);
@@ -41,9 +40,10 @@ export default function App() {
         ""
       )}
 
-      <p class="counter">
-        Requests: <span>{clicks}</span>
-      </p>
+      {clicks === 0 ? "" : <p class="counter">
+        You have Requested your location <span>{clicks} times now</span>
+      </p>}
+      
     </div>
   );
 }
